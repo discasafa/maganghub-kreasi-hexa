@@ -1,0 +1,76 @@
+TUGAS 9 – BERLATIH SQL
+
+1. Membuat Database
+CREATE DATABASE myshop;
+
+2. Membuat Table di Dalam Database
+USE myshop;
+
+CREATE TABLE users (
+    id int PRIMARY KEY AUTO_INCREMENT,
+    name varchar(255),
+    email varchar(255),
+    password varchar(255)
+);
+
+CREATE TABLE categories (
+    id int PRIMARY KEY AUTO_INCREMENT,
+    name varchar(255)
+);
+
+CREATE TABLE items (
+    id int PRIMARY KEY AUTO_INCREMENT,
+    name varchar(255),
+    description varchar(255),
+    price int,
+    stock int,
+    category_id int,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+3. Memasukkan Data ke Table
+-- Table users
+INSERT INTO users (name, email, password) VALUES
+('John Doe', 'john@doe.com', 'john123'),
+('Jane Doe', 'jane@doe.com', 'jenita123');
+
+-- Table categories
+INSERT INTO categories (name) VALUES
+('gadget'),
+('cloth'),
+('men'),
+('women'),
+('branded');
+
+-- Table items
+INSERT INTO items (name, description, price, stock, category_id) VALUES
+('Sumsang b50', 'hape keren dari merek sumsang', 4000000, 100, 1),
+('Uniklooh', 'baju keren dari brand ternama', 500000, 50, 2),
+('IMHO Watch', 'jam tangan anak yang jujur banget', 2000000, 10, 1);
+
+4. Mengambil Data dari Database
+a. Mengambil data users (tanpa password)
+SELECT id, name, email FROM users;
+
+b. Mengambil data items
+-- Harga di atas 1 juta
+SELECT * FROM items WHERE price > 1000000;
+
+-- Nama mirip “uniklo” (LIKE)
+SELECT * FROM items WHERE name LIKE '%uniklo%';
+
+c. Menampilkan data items dengan kategori (JOIN)
+SELECT 
+    items.name,
+    items.description,
+    items.price,
+    items.stock,
+    items.category_id,
+    categories.name AS kategori
+FROM items
+JOIN categories ON items.category_id = categories.id;
+
+5. Mengubah Data di Table
+UPDATE items
+SET price = 2500000
+WHERE name = 'Sumsang b50';
